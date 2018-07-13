@@ -1,16 +1,15 @@
 {
   "name": "mysql-access-test",
   "version": "1.0.0",
-  "description": "",
+  "description": "A node.js application that can query mysql databases and log the results",
   "main": "sql-query.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "sql-query.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Denizhan Kilic",
+  "license": "MIT",
   "dependencies": {
-    "express": "^4.16.3",
     "mysql": "^2.15.0"
   }
 }
