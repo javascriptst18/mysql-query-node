@@ -4,20 +4,18 @@ const fs = require('fs');
 // mysql module that lets node interact with mysql databases
 const mysql = require('mysql');
 
-// Define database objects with login information for different databases
-const localhost = {
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'test_db',
-};
+// Assign path to the configurations file
+const configFile = './config.json';
 
-// Assign paths to the log and query files
-const logFile = './log.txt';
-const queryStringFile = './query.sql'
+// Load the configurations
+const config = JSON.parse(fs.readFileSync(configFile, 'utf8'));
+
+// Assign file paths
+const queryStringFile = config.queryStringFile;
+const logFile = config.logFile;
 
 // Select the database to use
-const db = localhost;
+const db = config.database;
 
 // Pass the selected object to the mysql driver
 const connection = mysql.createConnection(db);

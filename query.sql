@@ -1,2 +1,10 @@
--- WRITE THE QUERY STRING YOU WANT TO SEND BELOW
--- MULTIPLE LINES ARE FINE, IT ALL BECOMES ONE STRING
+SELECT 
+  product.maker
+FROM product
+WHERE product.maker NOT IN (
+  SELECT product.maker
+  FROM product
+  INNER JOIN printer
+  ON product.model=printer.model
+)
+GROUP BY product.maker
