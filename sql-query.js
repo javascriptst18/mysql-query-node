@@ -5,8 +5,6 @@ const fs = require('fs');
 const mysql = require('mysql');
 
 // Define database objects with login information for different databases
-
-
 const localhost = {
   host: 'localhost',
   user: 'root',
@@ -37,11 +35,10 @@ let queryString = '';
   queryString = process.argv[2];
 } else { // If no argument is passed in via terminal, get the query string from a file instead
   queryString = fs.readFileSync(queryStringFile,'utf8');
-  console.log(queryString);
 }
 
 // Log the connection attempt to a log file
-fs.appendFileSync(logFile, `\n${new Date().toGMTString()}\nConnecting to ${db.host} as ${db.user}\nQuery sent: "${queryString}"\n`);
+fs.appendFileSync(logFile, `\n${new Date().toGMTString()}\nConnecting to ${db.host} as ${db.user}. Query sent: \n\n"${queryString}"\n`);
 
 // Open a connection to the selected database
 connection.connect();
@@ -54,15 +51,20 @@ connection.connect();
 connection.query(queryString, (error, results, fields) => {
   if (error) { // If there's an error, log it
     console.log(error);
-    fs.appendFileSync(logFile, `Query failed: ${error}\n`);
+    fs.appendFileSync(logFile, `\nQuery failed: ${error}\n`);
   } else if (Array.isArray(results)) { // If not publish results
-    fs.appendFileSync(logFile, 'Query successful. Showing results:\n\n-- Start of results --\n\n');
+    fs.appendFileSync(logFile, '\nQuery successful. Showing results:\n\n-- Start of results --\n\n');
     results.map((resultArrayElement) => {
       console.log(resultArrayElement);
       fs.appendFileSync(logFile, `${JSON.stringify(resultArrayElement)}\n`);
     })
     fs.appendFileSync(logFile, `\n-- End of results --\n`);
+  } else if (results.constructor.name == 'OkPacket') {
+    fs.appendFileSync(logFile, '\nQuery successful. Recieved an OK packet from the database.\n\n');
   } else {
+    fs.appendFileSync(logFile, '\nQuery successful. Result could not be parsed. See console for details.\n\n');
     console.log(results);
   }
+  connection.end();
 });
+
