@@ -36,7 +36,7 @@ let queryString = '';
 }
 
 // Log the connection attempt to a log file
-fs.appendFileSync(logFile, `\n${new Date().toGMTString()}\nConnecting to ${db.host} as ${db.user}. Query sent: \n\n"${queryString}"\n`);
+fs.appendFileSync(logFile, `\n${new Date().toGMTString()}\nConnecting to ${db.host} as ${db.user}. Query sent: \n\n${queryString}\n`);
 
 // Open a connection to the selected database
 connection.connect();
