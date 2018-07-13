@@ -7,7 +7,7 @@ Instructions:
 
 2. Run "npm install" to install dependencies
 
-3. Open the "sql-query.js" file in your editor and enter your database login options (i.e. the host, user, password, database properties for the "localhost" object on line 8)
+3. Open the "config.json" file and set your database options (host, username, password, default database to use)
 
 4. Run "node sql-query" in the terminal to run a query. The query string will be read from either the terminal ("node sql-query <STRING>") or if no string is passed it will be read from the "query.sql" file, where you can write multi-line queries.
 
